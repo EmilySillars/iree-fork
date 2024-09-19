@@ -43,6 +43,8 @@ python -m pip install --upgrade pip
 python -m pip install -r runtime/bindings/python/iree/runtime/build_requirements.txt
 ```
 
+Can also install pytorch inside this environment with `pip install torchvision `
+
 4. configure build settings as follows...
 
 ```
@@ -88,7 +90,13 @@ iree-compile \
 I will try this:
 
 ```
-../iree-build/tools/iree-compile --iree-hal-target-backends=llvm-cpu matmul.mlir -o matmul.vmfb
+../iree-build/tools/iree-compile --iree-hal-target-backends=llvm-cpu iree-fork/matmul.mlir -o iree-fork/out/matmul.vmfb
+```
+
+hoodle
+
+```
+--mlir-print-local-scope
 ```
 
 
@@ -96,6 +104,29 @@ I will try this:
 ### Install IREE Turbine
 
 Using these instructions: https://github.com/iree-org/iree-turbine/tree/main?tab=readme-ov-file#developers
+
+1. `git clone https://github.com/iree-org/iree-turbine.git`
+
+2. `cd iree-turbine`
+
+3. set up a virtual environment
+   ```
+   python -m venv --prompt iree-turbine .venv
+   source .venv/bin/activate
+   ```
+
+4. Install pytorch
+   ```
+   pip install -r pytorch-cpu-requirements.txt
+   ```
+
+5. Install dev packages
+   ```
+   # Install editable local projects.
+   pip install -r requirements.txt -e .
+   ```
+
+   
 
 ## Run a single file???
 
