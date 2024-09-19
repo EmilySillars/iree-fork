@@ -71,6 +71,28 @@ cmake --build ../iree-build/
 ctest --test-dir ../iree-build/
 ```
 
+### Compile a single MLIR file
+
+```
+../iree-build/tools/iree-compile <mlir-file-to-compile>
+```
+
+#### notes
+
+```
+iree-compile \
+    --iree-hal-target-backends=llvm-cpu \
+    mobilenet_iree_input.mlir -o mobilenet_cpu.vmfb
+```
+
+I will try this:
+
+```
+../iree-build/tools/iree-compile --iree-hal-target-backends=llvm-cpu matmul.mlir -o matmul.vmfb
+```
+
+
+
 ### Install IREE Turbine
 
 Using these instructions: https://github.com/iree-org/iree-turbine/tree/main?tab=readme-ov-file#developers
