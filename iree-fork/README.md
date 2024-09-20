@@ -67,41 +67,30 @@ cmake -G Ninja -B ../iree-build/ -S . \
 cmake --build ../iree-build/
 ```
 
-### Run tests
+### I. Run tests
 
 ```
 ctest --test-dir ../iree-build/
 ```
 
-### Compile a single MLIR file
+### II. Compile + Run a single MLIR file
 
-```
-../iree-build/tools/iree-compile <mlir-file-to-compile>
-```
+1. vector-mul.mlir: 
+   ````
+   sh iree-fork/vector-mul.sh
+   ````
 
-#### notes
+2. matmul4x4.mlir
+   ```
+   sh iree-fork/matmul4x4.sh
+   ```
 
-```
-iree-compile \
-    --iree-hal-target-backends=llvm-cpu \
-    mobilenet_iree_input.mlir -o mobilenet_cpu.vmfb
-```
+3. matmul104x104.mlir
+   ```
+   sh iree-fork/matmul104x104.sh
+   ```
 
-I will try this:
-
-```
-../iree-build/tools/iree-compile --iree-hal-target-backends=llvm-cpu iree-fork/matmul.mlir -o iree-fork/out/matmul.vmfb
-```
-
-hoodle
-
-```
---mlir-print-local-scope
-```
-
-
-
-### Install IREE Turbine
+### Install IREE Turbine (outside of this repo)
 
 Using these instructions: https://github.com/iree-org/iree-turbine/tree/main?tab=readme-ov-file#developers
 
@@ -126,11 +115,33 @@ Using these instructions: https://github.com/iree-org/iree-turbine/tree/main?tab
    pip install -r requirements.txt -e .
    ```
 
-   
 
-## Run a single file???
+#### Make IREE Turbine use *your* IREE build
 
-Read about it here: [../runtime/src/iree/runtime/demo/README.md](../runtime/src/iree/runtime/demo/README.md)
+todo!
+
+
 
 ## extras
 
+### notes
+
+--mlir-print-local-scope
+
+```
+iree-compile \
+    --iree-hal-target-backends=llvm-cpu \
+    mobilenet_iree_input.mlir -o mobilenet_cpu.vmfb
+```
+
+I will try this:
+
+```
+../iree-build/tools/iree-compile --iree-hal-target-backends=llvm-cpu iree-fork/matmul.mlir -o iree-fork/out/matmul.vmfb
+```
+
+hoodle
+
+#### Run a single file???
+
+Read about it here: [../runtime/src/iree/runtime/demo/README.md](../runtime/src/iree/runtime/demo/README.md)
