@@ -90,6 +90,14 @@ ctest --test-dir ../iree-build/
    sh iree-fork/matmul104x104.sh
    ```
 
+### III. Compile Neural Network Kernels
+
+1. matmul extracted from alexnet ([more details here](pulling-out-a-matmul-kernel.md))
+
+   ```
+   sh iree-fork/compile-from-mlir.sh alexnetMatmul
+   ```
+
 ### Install IREE Turbine (outside of this repo)
 
 Using these instructions: https://github.com/iree-org/iree-turbine/tree/main?tab=readme-ov-file#developers
@@ -115,12 +123,57 @@ Using these instructions: https://github.com/iree-org/iree-turbine/tree/main?tab
    pip install -r requirements.txt -e .
    ```
 
+6. Make sure everything is okay by running tests with
+   ```
+   pytest .
+   ```
 
 #### Make IREE Turbine use *your* IREE build
 
-todo!
+1. Inside the virtual environment, make sure to uninstall the iree compiler (so you don't accidentally use it instead of your dev build):
 
+```
+pip uninstall iree-compiler
+pip uninstall iree-runtime
+```
 
+2. Copy the .env file from your iree build folder into the top level directory of your iree-turnine repo!
+
+Then, before running any iree-turbine commands, do
+
+```
+source .env && export PYTHONPATH
+```
+
+#### Convert Python to MLIR using IREE Turbine
+
+I am not sure I even needed to clone the iree-turbine repo.
+
+It provides an ahead of time compilation tool that produces MLIR, for example [here](https://github.com/iree-org/iree-turbine/blob/main/examples/aot_mlp/mlp_export_simple.py), but maybe all I need to do is install iree-turbine with `pip install iree-turbine` for use as an end-user. Let's try that.
+
+1. navigate to top-level iree-fork directory
+
+2. ```
+   source .venv/bin/activate
+   ```
+
+3. ```
+   pip install iree-turbine
+   ```
+
+4. Now I can write a python file that uses the iree-turbine export functions to convert pytorch models to mlir...
+
+- **Convert alexnet to MLIR and run:**
+
+  ```
+  sh iree-fork/alexnet-to-mlir.sh
+  ```
+
+- **Convert alexnet to MLIR and output linalg:**
+
+  ```
+  sh iree-fork/alexnet-to-linalg.sh
+  ```
 
 ## extras
 
