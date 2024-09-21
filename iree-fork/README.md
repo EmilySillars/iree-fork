@@ -1,5 +1,22 @@
 # Emily's IREE Fork
 
+## What can I compile and run, and for which targets?
+
+Full Neural Networks
+
+| Name    | Details                                          | Did I Generate Intermediate Linalg? | Compiles to .vmfb | Runs on x86 |
+| ------- | ------------------------------------------------ | ----------------------------------- | ----------------- | ----------- |
+| alexnet | Full NN<br />`sh iree-fork/alexnet-to-linalg.sh` | ✓                                   | ✓                 | ✓           |
+
+Kernels
+
+| Name          | Details                                                      | Did I Generate Intermediate Linalg? | Compiles to .vmfb | Runs on x86 |
+| ------------- | ------------------------------------------------------------ | ----------------------------------- | ----------------- | ----------- |
+| alexnetMatmul | matmul manually extracted from alexnet<br /><1x9216> x <9216x4096> | ✓                                   | ✓                 |             |
+| veector-mul   | 1x4 vector multiplication (1D tensors)                       |                                     | ✓                 | ✓           |
+| matmul4x4     | 4x4 matmul                                                   |                                     | ✓                 | ✓           |
+| matmul104x104 | 104x104 matmul                                               |                                     | ✓                 | ✓           |
+
 ## setup
 
 0. Note: setup instructions are based on these: https://iree.dev/building-from-source/getting-started/#quickstart-clone-and-build
