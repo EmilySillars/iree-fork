@@ -192,6 +192,18 @@ It provides an ahead of time compilation tool that produces MLIR, for example [h
   sh iree-fork/alexnet-to-linalg.sh
   ```
 
+### gaucamole: add a custom pass to IREE
+
+#### Files to modify
+
+- compiler/src/iree/compiler/Dialect/LinalgExt/Transforms/Passes.td
+
+- compiler/src/iree/compiler/Dialect/LinalgExt/Transforms/ConvertToLoops.cpp
+
+  ^^ line 65, and the code after the "pass" comment!
+
+- compiler/src/iree/compiler/Codegen/LLVMCPU/Passes.cpp
+
 ## extras
 
 ### notes
