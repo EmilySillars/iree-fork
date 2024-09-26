@@ -31,6 +31,7 @@ iree_cc_library(
     "ConvertConv2DToIm2ColOp.cpp"
     "ConvertConv2DToWinograd.cpp"
     "ConvertToLoops.cpp"
+    "Guacamole.cpp"
     "DecomposeAttention.cpp"
     "DecomposeIm2col.cpp"
     "DecomposeWinogradPass.cpp"

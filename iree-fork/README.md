@@ -192,17 +192,35 @@ It provides an ahead of time compilation tool that produces MLIR, for example [h
   sh iree-fork/alexnet-to-linalg.sh
   ```
 
-### gaucamole: add a custom pass to IREE
+### guacamole: add a custom pass to IREE
 
-#### Files to modify
+- Consult [relevant-guacamole-changes.diff](relevant-guacamole-changes.diff)
 
-- compiler/src/iree/compiler/Dialect/LinalgExt/Transforms/Passes.td
+- Run pass with:
 
-- compiler/src/iree/compiler/Dialect/LinalgExt/Transforms/ConvertToLoops.cpp
+```
+../iree-build/tools/iree-opt -mlir-pass-statistics -mlir-pass-statistics-display=list --pass-pipeline="builtin.module(func.func(guacamole))" iree-fork/matmul104x104.mlir
+```
 
-  ^^ line 65, and the code after the "pass" comment!
+## troubleshooting
 
-- compiler/src/iree/compiler/Codegen/LLVMCPU/Passes.cpp
+1. ```
+   ../iree-build/tools/iree-opt --iree-linalg-ext-to-loops iree-fork/matmul104x104.mlir
+   <unknown>:0: error: unable to schedule pass 'LinalgExtToLoopsPass' on a PassManager intended to run on 'builtin.module'!
+   ```
+
+   Solution: https://discourse.llvm.org/t/correct-way-to-lower-tosa-to-linalg/68020
+
+   ```
+   ../iree-build/tools/iree-opt --pass-pipeline="builtin.module(func.func(iree-linalg-ext-to-loops))" iree-fork/matmul104x104.mlir
+   ```
+
+   Similarly,
+   ```
+   ../iree-build/tools/iree-opt --iree-linalg-pad-contraction-to-block-size iree-fork/matmul104x104.mlir
+   ```
+
+   works fine because `iree-linalg-pad-contraction-to-block-size` is NOT an interface pass!
 
 ## extras
 
@@ -227,3 +245,15 @@ hoodle
 #### Run a single file???
 
 Read about it here: [../runtime/src/iree/runtime/demo/README.md](../runtime/src/iree/runtime/demo/README.md)
+
+#### Files to modify
+
+- compiler/src/iree/compiler/Dialect/LinalgExt/Transforms/Passes.td
+
+- compiler/src/iree/compiler/Dialect/LinalgExt/Transforms/ConvertToLoops.cpp
+
+  ^^ line 65, and the code after the "pass" comment!
+
+- compiler/src/iree/compiler/Codegen/LLVMCPU/Passes.cpp
+
+## 

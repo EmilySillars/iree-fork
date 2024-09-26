@@ -9,6 +9,20 @@
 
 include "mlir/Pass/PassBase.td"
 
+def GuacamolePass :
+    Pass<"guacamole", ""> {
+  let summary = "IREE hello world pass at linalg level";
+  let description = [{
+    Counts all instructions and function names.
+  }];
+  let statistics = [
+    Statistic<"funcCount", "func-count",
+              "how many functions are in the source file?">,
+    Statistic<"insCount", "ins-func",
+              "how many instructions are in the source file?">,
+  ];
+}
+
 def LinalgExtToLoopsPass :
     InterfacePass<"iree-linalg-ext-to-loops", "mlir::FunctionOpInterface"> {
   let summary = "Convert LinalgExt ops to loops and Linalg ops.";
